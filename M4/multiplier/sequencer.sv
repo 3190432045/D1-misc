@@ -22,15 +22,42 @@
 module sequencer (input logic start, clock, Q0, n_rst,
  output logic add, shift, ready, reset);
 
- enum {IDLE, ADDING, SHIFTING, STOPPED} present_state, next_state;
+ enum {IDLE, ADDING, SHIFTING, STOPPED} state;
  int count;
 
  always_ff @(posedge clock, negedge n_rst)
     begin: SEQ
      if(!n_rst)
-        present_state <= IDLE;
-    else
-        present_state <= next_state;
+        state <= IDLE;
+     else
+        unique case (state)
+        IDLE: begin
+        count <= 4;
+          if (start)
+            state <= ADDING;
+        end
+
+        ADDING: begin
+            /*  should be = ? */
+            count <= count - 1;
+            state <= SHIFTING;
+        end
+
+        SHIFTING: begin
+            if (count > 0)
+                state <= ADDING;
+            else
+                state <= STOPPED;
+        end
+
+        STOPPED: begin
+            count <= 4;
+            if (start)
+                state <= ADDING;
+            else
+                state <= STOPPED;
+        end
+        endcase
     end
 
  always_comb
@@ -39,39 +66,21 @@ module sequencer (input logic start, clock, Q0, n_rst,
     shift = '0;
     ready = '0;
     reset = '0;
-    count = 4;
 
-    unique case (present_state)
+    unique case (state)
         IDLE: begin
-          reset = '1;
-          if (start)
-            next_state = ADDING;
+            reset = '1;
         end
-
         ADDING: begin
-            /*  should be =  */
-            count = count - 1;
             if (Q0)
                 add = '1;
-            next_state = SHIFTING;
         end
-
         SHIFTING: begin
             shift = '1;
-            if (count > 0)
-                next_state = ADDING;
-            else
-                next_state = STOPPED;
         end
-
         STOPPED: begin
             ready = '1;
-            if (start)
-                next_state = ADDING;
-            else
-                next_state = STOPPED;
         end
-
     endcase
     end
 

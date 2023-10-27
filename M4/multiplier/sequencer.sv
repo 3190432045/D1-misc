@@ -41,7 +41,7 @@ module sequencer (input logic start, clock, Q0, n_rst,
     reset = '0;
     count = 4;
 
-    unique_case (present_state)
+    unique case (present_state)
         IDLE: begin
           reset = '1;
           if (start)

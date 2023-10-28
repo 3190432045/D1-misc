@@ -53,7 +53,7 @@ module sequencer (input logic start, clock, Q0, n_rst,
         STOPPED: begin
             count <= 4;
             if (start)
-                state <= ADDING;
+                state <= IDLE;
             else
                 state <= STOPPED;
         end

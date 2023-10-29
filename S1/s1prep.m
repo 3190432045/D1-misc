@@ -2,13 +2,13 @@
 
 
 % zeta = 0
-servo1 = tf(1,[1 0 1 0]);
+servo1 = tf(1,[1 0 1]);
 % zeta = 0.5
-servo2 = tf(1,[1 1 1 0]);
+servo2 = tf(1,[1 1 1]);
 % zeta = 1
-servo3 = tf(1,[1 2 1 0]);
+servo3 = tf(1,[1 2 1]);
 % zeta = 2
-servo4 = tf(1,[1 4 1 0]);
+servo4 = tf(1,[1 4 1]);
 
 
 t = 0:0.01:20;

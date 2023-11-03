@@ -89,6 +89,7 @@ always_comb
                 next_state = loading;
         end
         loading: begin
+            reset_accumulator = '1;
             load = '1;
             next_state = processing;
         end
@@ -98,6 +99,7 @@ always_comb
                 next_state = saving;
         end
         saving: begin
+		//count = '1;
                 output_ready = '1;
                 next_state = waiting;
         end

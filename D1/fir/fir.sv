@@ -19,7 +19,7 @@ const sample_array coefficients [0:15] =
      645, 318, -134, -81};
 
 
-// const sample_array coefficients [0:15] = '{-79,-136,312,654,-1244,-2280,4501,14655,14655,4501,-2280,-1244,654,312,-136,-79,};
+// const sample_array coefficients [0:15] = '{-79,-136,312,654,-1244,-2280,4501,14655,14655,4501,-2280,-1244,654,312,-136,-79};
 
 logic unsigned [3:0] address; //clog2 of 16 is 4
 
@@ -54,10 +54,12 @@ always_ff @(posedge ck)
 
 always_ff @(posedge ck)
     begin: COUNTER
-        if (address > 15)
-            address <= 0;
-        else if (count)
-            address <= address + 1;
+//        if (address > 15)
+//            address <= '0;
+        if (count)
+            address <= address + 4'b0001;
+        else
+            address <= '0;
     end
 
 // implement a synchronous counter that counts up through all 16 values of address
@@ -92,7 +94,7 @@ always_comb
         end
         processing: begin
             count = '1;
-            if (address > 15)
+            if (address == 15)
                 next_state = saving;
         end
         saving: begin

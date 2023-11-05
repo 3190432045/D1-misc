@@ -22,7 +22,7 @@ module D1 (input logic CLOCK_50, CLOCK2_50, input logic [0:0] KEY,
 //	assign writedata_right = readdata_right;
 fir FIR2(.in(readdata_right[23:8]), .input_ready(read_ready), .ck(CLOCK_50), .rst(reset), .out(writedata_right[23:8]), .output_ready(write));
 	assign read = read_ready;
-	assign write = write_ready;
+//	assign write = write_ready;
 
 /////////////////////////////////////////////////////////////////////////////////
 // Audio CODEC interface.

@@ -1,11 +1,11 @@
 module D1 (input logic CLOCK_50, CLOCK2_50, input logic [0:0] KEY,
-	       // I2C Audio/Video config interface 
-           output logic FPGA_I2C_SCLK, inout wire FPGA_I2C_SDAT, 
+	       // I2C Audio/Video config interface
+           output logic FPGA_I2C_SCLK, inout wire FPGA_I2C_SDAT,
            // Audio CODEC
-           output logic AUD_XCK, 
-		   input logic AUD_DACLRCK, AUD_ADCLRCK, AUD_BCLK, AUD_ADCDAT, 
+           output logic AUD_XCK,
+		   input logic AUD_DACLRCK, AUD_ADCLRCK, AUD_BCLK, AUD_ADCDAT,
 		   output logic AUD_DACDAT);
-	
+
 	// Local wires.
 	wire read_ready, write_ready, read, write;
 	wire [23:0] readdata_left, readdata_right;
@@ -14,19 +14,21 @@ module D1 (input logic CLOCK_50, CLOCK2_50, input logic [0:0] KEY,
 
 	/////////////////////////////////
 	// This simply connects the reads and the writes together.
-	// 
+	//
 	/////////////////////////////////
-	
+
 	assign writedata_left = readdata_left;
-	assign writedata_right = readdata_right;
+//fir FIR1(.in(readdata_left[23:8]), .input_ready(write_ready), .ck(CLOCK_50), .rst(reset), .out(writedata_right[23:8]), .output_ready(read_ready));
+//	assign writedata_right = readdata_right;
+fir FIR2(.in(readdata_right[23:8]), .input_ready(read_ready), .ck(CLOCK_50), .rst(reset), .out(writedata_right[23:8]), .output_ready(write));
 	assign read = read_ready;
 	assign write = write_ready;
-	
+
 /////////////////////////////////////////////////////////////////////////////////
-// Audio CODEC interface. 
+// Audio CODEC interface.
 //
 // The interface consists of the following wires:
-// read_ready, write_ready - CODEC ready for read/write operation 
+// read_ready, write_ready - CODEC ready for read/write operation
 // readdata_left, readdata_right - left and right channel data from the CODEC
 // read - send data from the CODEC (both channels)
 // writedata_left, writedata_right - left and right channel data to the CODEC

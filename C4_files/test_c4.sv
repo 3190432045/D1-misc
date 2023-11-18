@@ -6,7 +6,7 @@
 // Description: Testbench for for C4 Lab exercise
 //            :
 // Limitations: None
-//            : 
+//            :
 // System     : SystemVerilog IEEE 1800-2005
 //            :
 // Author     : Mark Zwolinski
@@ -16,7 +16,7 @@
 //            : mz@ecs.soton.ac.uk
 //
 // Revision   : Version 1.0 28/08/17
-//            : Version 2.0 04/11/20 
+//            : Version 2.0 04/11/20
 //
 /////////////////////////////////////////////////////////////////////
 
@@ -31,15 +31,16 @@ logic n_clk, rst, a;
 
 c4 c4 (.*);
 
-initial 
+initial
   begin
   n_clk = 0;
   #20;
   forever #10 n_clk = ~n_clk;
   end
-  
+
 initial
 
+/*
   begin
   rst = 1;
   a = 0;
@@ -54,6 +55,31 @@ initial
   #20 a = 1;
   #20 $finish;
   end
+*/
+
+begin
+
+  rst = 1;
+  a = 0;
+  #10 rst = 0;
+  #10 rst = 1;
+  #10
+  if ({s,t} == 2'b00)
+      $display("00/0 -> 00\t success\n");
+  else
+      $display("00/0 -> 00\t fail\n");
+
+  rst = 1;
+  a = 0;
+  #10 rst = 0;
+  #10 rst = 1;
+  a = 1;
+  #10
+  if ({s,t} == 2'b01)
+      $display("00/1 -> 01\t success\n");
+  else
+      $display("00/1 -> 01\t fail\n");
+
+end
 
 endmodule
-  

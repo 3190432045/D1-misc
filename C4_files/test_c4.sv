@@ -26,8 +26,8 @@ module test_c4;
 timeunit 1ns;
 timeprecision 100ps;
 
-logic s, t, n;
-logic n_clk, rst, a, c;
+logic s, t, n, sdo;
+logic n_clk, rst, a, c, m ,sdi;
 
 c4 c4 (.*);
 
@@ -56,7 +56,7 @@ initial
   #20 $finish;
   end
 */
-
+/*
 begin
         rst = 1;
 		a = 0;
@@ -85,7 +85,28 @@ begin
 
         #20 $finish;
     end
+*/
 
+// 2.4
+
+    begin
+        a = 0;
+        c = 0;
+        m = 0;
+        #10 rst = 0;
+        #10 rst = 1;
+        #100 m = 1;
+        sdi = 1;
+        #20 sdi = 0;
+        #20 sdi = 1;
+        #20 sdi = 1;
+        #20 sdi = 1;
+        #20 sdi = 0;
+        #20 sdi = 1;
+        #20 sdi = 0;
+        #20 sdi = 0;
+        #20 sdi = 1;
+    end
 /*
 begin
 

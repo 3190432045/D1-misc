@@ -6,7 +6,7 @@
 // Description: Output Register code for C4 Lab exercise
 //            :
 // Limitations: None
-//            : 
+//            :
 // System     : SystemVerilog IEEE 1800-2005
 //            :
 // Author     : Mark Zwolinski
@@ -16,14 +16,18 @@
 //            : mz@ecs.soton.ac.uk
 //
 // Revision   : Version 1.0 28/08/17
-//            : Version 2.0 04/11/20 
+//            : Version 2.0 04/11/20
 //
 /////////////////////////////////////////////////////////////////////
 
-module output_reg (output logic n, input logic clk, s, t, c);
+module output_reg (output logic n, input logic clk, s, t, c, rst, mode, scan_in);
 
-always_ff @(posedge clk)
-  if (s)
+always_ff @(posedge clk, negedge rst)
+  if (~rst)
+    n <= 0;
+  else if(mode)
+    n <= scan_in;
+  else if (s)
     n <= t & c;
-    
+
 endmodule

@@ -21,16 +21,24 @@
 /////////////////////////////////////////////////////////////////////
 
 
-module c4 (output logic s, t, n, input logic n_clk, rst, a, c);
+module c4 (output logic s, t, n, sdo, input logic n_clk, rst, a, c, m, sdi);
 
 logic s_plus, t_plus, s_bar, t_bar, clk;
 
 assign clk = ~n_clk;
+//always_comb
+always @(*)
+    begin
+        if(m) assign sdo = n;
+        else sdo = 0;
+    end
 
 next_state n0 (.*);
-d_ff d0 (.q(s), .qbar(s_bar), .clk(clk), .rst(rst), .d(s_plus));
-d_ff d1 (.q(t), .qbar(t_bar), .clk(clk), .rst(rst), .d(t_plus));
-output_reg o1 (.*);
+//d_ff d0 (.q(s), .qbar(s_bar), .clk(clk), .rst(rst), .d(s_plus));
+//d_ff d1 (.q(t), .qbar(t_bar), .clk(clk), .rst(rst), .d(t_plus));
+scan_dff d0 (.q(s), .qbar(s_bar), .clk(clk), .rst(rst), .d(s_plus), .mode(m), .scan_in(sdi));
+scan_dff d1 (.q(t), .qbar(t_bar), .clk(clk), .rst(rst), .d(t_plus), .mode(m), .scan_in(s));
+output_reg o1 (.n(n), .clk(clk), .rst(rst), .s(s), .t(t), .c(c), .mode(m), .scan_in(t));
 
 endmodule
 

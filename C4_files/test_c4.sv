@@ -40,7 +40,7 @@ initial
 
 initial
 
-/*
+
   begin
   rst = 1;
   a = 0;
@@ -55,31 +55,108 @@ initial
   #20 a = 1;
   #20 $finish;
   end
-*/
 
+
+/*
 begin
 
   rst = 1;
   a = 0;
   #10 rst = 0;
   #10 rst = 1;
-  #10
+  #5
   if ({s,t} == 2'b00)
       $display("00/0 -> 00\t success\n");
   else
       $display("00/0 -> 00\t fail\n");
 
+  #5
   rst = 1;
   a = 0;
   #10 rst = 0;
   #10 rst = 1;
   a = 1;
-  #10
+  #5
   if ({s,t} == 2'b01)
       $display("00/1 -> 01\t success\n");
   else
       $display("00/1 -> 01\t fail\n");
 
 end
+*/
+
+// assertions
+
+cover property StateChange_000_00;
+ ({s,t,a} == 3'b000) |=> ({s,t} == 2'b00);
+endproperty
+
+cover property StateChange_001_01;
+ ({s,t,a} == 3'b001) |=> ({s,t} == 2'b01);
+endproperty
+
+cover property StateChange_010_11;
+ ({s,t,a} == 3'b010) |=> ({s,t} == 2'b11);
+endproperty
+
+cover property StateChange_011_10;
+ ({s,t,a} == 3'b011) |=> ({s,t} == 2'b10);
+endproperty
+
+cover property StateChange_110_00;
+ ({s,t,a} == 3'b110) |=> ({s,t} == 2'b00);
+endproperty
+
+cover property StateChange_111_00;
+ ({s,t,a} == 3'b111) |=> ({s,t} == 2'b00);
+endproperty
+
+cover property StateChange_100_00;
+ ({s,t,a} == 3'b100) |=> ({s,t} == 2'b00);
+endproperty
+
+cover property StateChange_101_10;
+ ({s,t,a} == 3'b101) |=> ({s,t} == 2'b10);
+endproperty
+
+000_00 : assert property(StateChange_000_00)
+      $display("00/0 -> 00\t success\n");
+  else
+      $display("00/0 -> 00\t fail\n");
+
+001_01 : assert property(StateChange_001_01)
+      $display("00/1 -> 01\t success\n");
+  else
+      $display("00/1 -> 01\t fail\n");
+
+010_11 : assert property(StateChange_010_11)
+      $display("01/0 -> 11\t success\n");
+  else
+      $display("01/0 -> 11\t fail\n");
+
+011_10 : assert property(StateChange_011_10)
+      $display("01/1 -> 10\t success\n");
+  else
+      $display("01/1 -> 10\t fail\n");
+
+110_00 : assert property(StateChange_110_00)
+      $display("11/0 -> 00\t success\n");
+  else
+      $display("11/0 -> 00\t fail\n");
+
+111_00 : assert property(StateChange_111_00)
+      $display("11/1 -> 00\t success\n");
+  else
+      $display("11/1 -> 00\t fail\n");
+
+100_00 : assert property(StateChange_100_00)
+      $display("10/0 -> 00\t success\n");
+  else
+      $display("10/0 -> 00\t fail\n");
+
+101_10 : assert property(StateChange_101_10)
+      $display("10/1 -> 10\t success\n");
+  else
+      $display("10/1 -> 10\t fail\n");
 
 endmodule

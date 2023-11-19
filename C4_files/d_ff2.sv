@@ -21,14 +21,14 @@
 /////////////////////////////////////////////////////////////////////
 
 
-module d_ff2 (output logic q, input logic clk, rst, enable, d);
+module d_ff2 (output logic q, input logic clk, enable, d);
 
 always_ff @(posedge clk, negedge rst)
-  if (~rst)
+  if (~enable)
     begin
     q <= 1'b0;
     end
-  else if(enable)
+  else
     begin
     q <= d;
     end

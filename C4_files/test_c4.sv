@@ -40,11 +40,10 @@ initial
 
 initial
 
-
+/*
   begin
   rst = 1;
   a = 0;
-  c = 1;
   #10 rst = 0;
   #10 rst = 1;
   #40 a = 1;
@@ -56,8 +55,8 @@ initial
   #20 a = 1;
   #20 $finish;
   end
+*/
 
-/*
 begin
         rst = 1;
 		a = 0;
@@ -86,7 +85,7 @@ begin
 
         #20 $finish;
     end
-*/
+
 /*
 begin
 

@@ -21,7 +21,7 @@
 /////////////////////////////////////////////////////////////////////
 
 
-module c4 (output logic s, t, n, input logic n_clk, rst, a, c);
+module c4 (output logic s, t, n input logic n_clk, rst, a, c);
 
 logic s_plus, t_plus, s_bar, t_bar, d_plus, clk;
 
@@ -30,7 +30,7 @@ assign clk = ~n_clk;
 next_state n0 (.*);
 d_ff d0 (.q(s), .qbar(s_bar), .clk(clk), .rst(rst), .d(s_plus));
 d_ff d1 (.q(t), .qbar(t_bar), .clk(clk), .rst(rst), .d(t_plus));
-d_ff2 d2 (.q(n), .clk(clk), .rst(rst), .enable(s), .d(d_plus));
+d_ff2 d2 (.q(n), .clk(clk), .enable(s), .d(d_plus));
 //output_reg o1 (.*);
 
 endmodule

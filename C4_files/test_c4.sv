@@ -87,74 +87,78 @@ end
 
 // assertions
 
-cover property StateChange_000_00;
- ({s,t,a} == 3'b000) |=> ({s,t} == 2'b00);
+//default clocking clock_block
+//@(negedge n_clk);
+//endclocking
+
+property StateChange_000_00;
+@(negedge n_clk) ({s,t,a} == 3'b000) |=> ({s,t} == 2'b00);
 endproperty
 
-cover property StateChange_001_01;
- ({s,t,a} == 3'b001) |=> ({s,t} == 2'b01);
+property StateChange_001_01;
+@(negedge n_clk) ({s,t,a} == 3'b001) |=> ({s,t} == 2'b01);
 endproperty
 
-cover property StateChange_010_11;
- ({s,t,a} == 3'b010) |=> ({s,t} == 2'b11);
+property StateChange_010_11;
+@(negedge n_clk) ({s,t,a} == 3'b010) |=> ({s,t} == 2'b11);
 endproperty
 
-cover property StateChange_011_10;
- ({s,t,a} == 3'b011) |=> ({s,t} == 2'b10);
+property StateChange_011_10;
+@(negedge n_clk) ({s,t,a} == 3'b011) |=> ({s,t} == 2'b10);
 endproperty
 
-cover property StateChange_110_00;
- ({s,t,a} == 3'b110) |=> ({s,t} == 2'b00);
+property StateChange_110_00;
+@(negedge n_clk) ({s,t,a} == 3'b110) |=> ({s,t} == 2'b00);
 endproperty
 
-cover property StateChange_111_00;
- ({s,t,a} == 3'b111) |=> ({s,t} == 2'b00);
+property StateChange_111_00;
+@(negedge n_clk) ({s,t,a} == 3'b111) |=> ({s,t} == 2'b00);
 endproperty
 
-cover property StateChange_100_00;
- ({s,t,a} == 3'b100) |=> ({s,t} == 2'b00);
+property StateChange_100_00;
+@(negedge n_clk) ({s,t,a} == 3'b100) |=> ({s,t} == 2'b00);
 endproperty
 
-cover property StateChange_101_10;
- ({s,t,a} == 3'b101) |=> ({s,t} == 2'b10);
+property StateChange_101_10;
+@(negedge n_clk) ({s,t,a} == 3'b101) |=> ({s,t} == 2'b10);
 endproperty
 
-000_00 : assert property(StateChange_000_00)
+StateChange000_00 : assert property(StateChange_000_00)
       $display("00/0 -> 00\t success\n");
   else
       $display("00/0 -> 00\t fail\n");
 
-001_01 : assert property(StateChange_001_01)
+StateChange001_01 : assert property(StateChange_001_01)
       $display("00/1 -> 01\t success\n");
   else
       $display("00/1 -> 01\t fail\n");
 
-010_11 : assert property(StateChange_010_11)
+StateChange010_11 : assert property(StateChange_010_11)
       $display("01/0 -> 11\t success\n");
   else
       $display("01/0 -> 11\t fail\n");
 
-011_10 : assert property(StateChange_011_10)
+StateChange011_10 : assert property(StateChange_011_10)
       $display("01/1 -> 10\t success\n");
   else
       $display("01/1 -> 10\t fail\n");
 
-110_00 : assert property(StateChange_110_00)
+StateChange110_00 : assert property(StateChange_110_00)
       $display("11/0 -> 00\t success\n");
   else
       $display("11/0 -> 00\t fail\n");
 
-111_00 : assert property(StateChange_111_00)
+StateChange111_00 : assert property(StateChange_111_00)
       $display("11/1 -> 00\t success\n");
   else
       $display("11/1 -> 00\t fail\n");
 
-100_00 : assert property(StateChange_100_00)
+StateChange100_00 : assert property(StateChange_100_00)
       $display("10/0 -> 00\t success\n");
   else
       $display("10/0 -> 00\t fail\n");
 
-101_10 : assert property(StateChange_101_10)
+StateChange101_10 : assert property(StateChange_101_10)
       $display("10/1 -> 10\t success\n");
   else
       $display("10/1 -> 10\t fail\n");

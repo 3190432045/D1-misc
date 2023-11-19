@@ -40,7 +40,7 @@ initial
 
 initial
 
-
+/*
   begin
   rst = 1;
   a = 0;
@@ -55,7 +55,35 @@ initial
   #20 a = 1;
   #20 $finish;
   end
+*/
 
+begin
+        rst = 1;
+		a = 0;
+        #20 rst = 0;
+		#20 rst = 1;  //reset to AA
+
+
+        #20 a = 1;	// AA to AB
+        #20 a = 0;  // AB to AC
+
+        #20 a = 0;	// AC back to AA
+        #20 a = 1;  // AA to AB
+
+
+        #20 a = 0; 	// AB to AC
+
+
+        #20 a = 1;	// AC back to AA
+
+        #20 a = 1;	// AA to AB
+
+        #20 a = 1;  // AB to AD
+        #20 a = 1;  // AD back to AD
+		#20 a = 0;	// AD to AA
+
+        #20 $finish;
+    end
 
 /*
 begin
@@ -92,35 +120,35 @@ end
 //endclocking
 
 property StateChange_000_00;
-@(negedge n_clk) ({s,t,a} == 3'b000) |=> ({s,t} == 2'b00);
+@(negedge n_clk) ({s,t,a} == 3'b000) |-> ({s,t} == 2'b00);
 endproperty
 
 property StateChange_001_01;
-@(negedge n_clk) ({s,t,a} == 3'b001) |=> ({s,t} == 2'b01);
+@(negedge n_clk) ({s,t,a} == 3'b001) |-> ({s,t} == 2'b01);
 endproperty
 
 property StateChange_010_11;
-@(negedge n_clk) ({s,t,a} == 3'b010) |=> ({s,t} == 2'b11);
+@(negedge n_clk) ({s,t,a} == 3'b010) |-> ({s,t} == 2'b11);
 endproperty
 
 property StateChange_011_10;
-@(negedge n_clk) ({s,t,a} == 3'b011) |=> ({s,t} == 2'b10);
+@(negedge n_clk) ({s,t,a} == 3'b011) |-> ({s,t} == 2'b10);
 endproperty
 
 property StateChange_110_00;
-@(negedge n_clk) ({s,t,a} == 3'b110) |=> ({s,t} == 2'b00);
+@(negedge n_clk) ({s,t,a} == 3'b110) |-> ({s,t} == 2'b00);
 endproperty
 
 property StateChange_111_00;
-@(negedge n_clk) ({s,t,a} == 3'b111) |=> ({s,t} == 2'b00);
+@(negedge n_clk) ({s,t,a} == 3'b111) |-> ({s,t} == 2'b00);
 endproperty
 
 property StateChange_100_00;
-@(negedge n_clk) ({s,t,a} == 3'b100) |=> ({s,t} == 2'b00);
+@(negedge n_clk) ({s,t,a} == 3'b100) |-> ({s,t} == 2'b00);
 endproperty
 
 property StateChange_101_10;
-@(negedge n_clk) ({s,t,a} == 3'b101) |=> ({s,t} == 2'b10);
+@(negedge n_clk) ({s,t,a} == 3'b101) |-> ({s,t} == 2'b10);
 endproperty
 
 StateChange000_00 : assert property(StateChange_000_00)

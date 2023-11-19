@@ -44,7 +44,6 @@ initial
   begin
   rst = 1;
   a = 0;
-  c = 1;
   #10 rst = 0;
   #10 rst = 1;
   #40 a = 1;

@@ -26,7 +26,7 @@
 `undef FSA0
 `undef FSA1
 
-module next_state (output logic s_plus, t_plus, d_plus, input logic s, s_bar, t, t_bar, a, c);
+module next_state (output logic s_plus, t_plus, d_plus input logic s, s_bar, t, t_bar, a, c);
 
 logic a_bar, e, f, g, h;
 

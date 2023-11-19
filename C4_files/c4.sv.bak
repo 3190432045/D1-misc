@@ -30,7 +30,7 @@ assign clk = ~n_clk;
 next_state n0 (.*);
 d_ff d0 (.q(s), .qbar(s_bar), .clk(clk), .rst(rst), .d(s_plus));
 d_ff d1 (.q(t), .qbar(t_bar), .clk(clk), .rst(rst), .d(t_plus));
-d_ff2 d2 (.q(n), .clk(clk), .rst(rst), .enable(s), .d(d_plus));
+d_ff2 d2 (.q(n), .clk(clk), .enable(s), .d(d_plus));
 //output_reg o1 (.*);
 
 endmodule

@@ -6,7 +6,7 @@
 // Description: Next state logic code for C4 Lab exercise
 //            :
 // Limitations: None
-//            : 
+//            :
 // System     : SystemVerilog IEEE 1800-2005
 //            :
 // Author     : Mark Zwolinski
@@ -26,7 +26,7 @@
 `undef FSA0
 `undef FSA1
 
-module next_state (output logic s_plus, t_plus, input logic s, s_bar, t, t_bar, a);
+module next_state (output logic s_plus, t_plus, d_plus input logic s, s_bar, t, t_bar, a, c);
 
 logic a_bar, e, f, g, h;
 
@@ -45,5 +45,7 @@ nand g3 (t_plus, g, h);
 nand g4 (g, a, s_bar, t_bar);
 nand g5 (h, a_bar, s_bar, t);
 not g6 (a_bar, a);
+
+and g7 (d_plus, t, c);
 
 endmodule

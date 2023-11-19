@@ -26,8 +26,8 @@ module test_c4;
 timeunit 1ns;
 timeprecision 100ps;
 
-logic s, t;
-logic n_clk, rst, a;
+logic s, t, n;
+logic n_clk, rst, a, c;
 
 c4 c4 (.*);
 

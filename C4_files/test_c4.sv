@@ -60,6 +60,7 @@ initial
 begin
         rst = 1;
 		a = 0;
+		c = 1;
         #20 rst = 0;
 		#20 rst = 1;  //reset to AA
 

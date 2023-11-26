@@ -1,43 +1,48 @@
-% system
+% system for s2
 
 
-% zeta = 0
-servo1 = tf(1,[1 0 1]);
-% zeta = 0.5
-servo2 = tf(1,[1 1 1]);
-% zeta = 1
-servo3 = tf(1,[1 2 1]);
-% zeta = 2
-servo4 = tf(1,[1 4 1]);
+g = 9.81;
+L = 0.20;
+omega1 = sqrt(g/L);
+
+% system function
+SysP_s = tf(-omega1^2,[1 0 -omega1^2]);
+
+disp('==========DISP ON==========');
+disp(SysP_s);
+disp('==========DISP OFF=========');
+
+% rlocus
+[R,K] = rlocus(SysP_s);
+disp('==========DISP ON==========');
+disp(R);
+disp(K);
+disp('==========DISP OFF=========');
+
+% bode
+[MAG,PHASE] = bode(SysP_s);
+disp('==========DISP ON==========');
+disp(MAG);
+disp(PHASE);
+disp('==========DISP OFF=========');
 
 
 t = 0:0.01:20;
 
-[y1,t] = step(servo1,t);
-
-[y2,t] = step(servo2,t);
-
-[y3,t] = step(servo3,t);
-
-[y4,t] = step(servo4,t);
+[y1,t] = step(SysP_s,t);
 
 
-subplot(2,2,1);
+%subplot(2,2,1);
 plot(t,y1);
-title('step responce zeta = 0');
+title('step responce');
 grid on;
 
-subplot(2,2,2);
-plot(t,y2);
-title('step responce zeta = 0.5');
-grid on;
+%figure rlocus
+figure;
+rlocus(SysP_s);
+title('Root Locus Plot');
 
-subplot(2,2,3);
-plot(t,y3);
-title('step responce zeta = 1');
-grid on;
-
-subplot(2,2,4);
-plot(t,y4);
-title('step responce zeta = 2');
-grid on;
+%figure bode
+figure;
+bode(SysP_s);
+title('Bode Plot');

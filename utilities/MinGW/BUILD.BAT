@@ -63,6 +63,14 @@
 @ECHO.
 
 
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME% /AD /S /B') DO SET INC_DIR_LIST=!INC_DIR_LIST! -I%%f
+@IF ERRORLEVEL 1 GOTO error_generic
+@SET C_COMPILER_OPTION=!C_COMPILER_OPTION! %INC_DIR_LIST%
+@IF ERRORLEVEL 1 GOTO error_generic
+@SET CPP_COMPILER_OPTION=!CPP_COMPILER_OPTION! %INC_DIR_LIST%
+@IF ERRORLEVEL 1 GOTO error_generic
+
+
 @ECHO.
 @ECHO                             BUILD FOR MINGW
 @ECHO.
@@ -73,13 +81,13 @@
 
 @IF NOT EXIST obj MD obj
 @IF ERRORLEVEL 1 GOTO error_generic
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.c /s /b') DO %GCC_EXECUTABLE_DIR% %C_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.c /S /B') DO %GCC_EXECUTABLE_DIR% %C_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
 @IF ERRORLEVEL 1 GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cpp /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cpp /S /B') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
 @IF ERRORLEVEL 1 GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cc /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cc /S /B') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
 @IF ERRORLEVEL 1 GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cxx /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cxx /S /B') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
 @IF ERRORLEVEL 1 GOTO error_compile
 
 
@@ -91,7 +99,7 @@
 @ECHO.
 
 
-@FOR /F  "delims="  %%f IN ('DIR obj\*.o /s /b') DO SET OBJ_FILE_LIST=!OBJ_FILE_LIST! %%f
+@FOR /F  "delims="  %%f IN ('DIR obj\*.o /S /B') DO SET OBJ_FILE_LIST=!OBJ_FILE_LIST! %%f
 @%GPP_EXECUTABLE_DIR% -o %BUILD_TARGET_NAME%.exe %OBJ_FILE_LIST% %LINKER_OPTION%
 @IF ERRORLEVEL 1 GOTO error_link
 

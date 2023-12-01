@@ -27,8 +27,7 @@
 
 
 @IF NOT EXIST %CONFIG_FILE_PATH% GOTO error_config_file
-@FOR /F "tokens=1,* delims==" %%a IN (%CONFIG_FILE_PATH%) DO SET "%%a=%%b"
-@IF ERRORLEVEL 1 GOTO error_missing_config
+@FOR /F "tokens=1,* delims==" %%a IN (%CONFIG_FILE_PATH%) DO SET "%%a=%%b" || GOTO error_missing_config
 @IF NOT DEFINED GCC_EXECUTABLE_DIR SET GCC_EXECUTABLE_DIR=avr-gcc
 @IF NOT EXIST %GCC_EXECUTABLE_DIR% GOTO error_executable_gcc
 @IF NOT DEFINED GPP_EXECUTABLE_DIR SET GCC_EXECUTABLE_DIR=avr-g++
@@ -52,12 +51,9 @@
 @ECHO.
 
 
-@IF EXIST %BUILD_TARGET_NAME%.elf DEL /F /Q %BUILD_TARGET_NAME%.elf
-@IF ERRORLEVEL 1 GOTO error_generic
-@IF EXIST %BUILD_TARGET_NAME%.hex DEL /F /Q %BUILD_TARGET_NAME%.hex
-@IF ERRORLEVEL 1 GOTO error_generic
-@IF EXIST obj\*.o DEL /F /Q obj\*.o
-@IF ERRORLEVEL 1 GOTO error_generic
+@IF EXIST %BUILD_TARGET_NAME%.elf DEL /F /Q %BUILD_TARGET_NAME%.elf || GOTO error_generic
+@IF EXIST %BUILD_TARGET_NAME%.hex DEL /F /Q %BUILD_TARGET_NAME%.hex || GOTO error_generic
+@IF EXIST obj\*.o DEL /F /Q obj\*.o || GOTO error_generic
 
 
 @ECHO.
@@ -68,12 +64,9 @@
 @ECHO.
 
 
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME% /AD /S /B') DO SET INC_DIR_LIST=!INC_DIR_LIST! -I%%f
-@IF ERRORLEVEL 1 GOTO error_generic
-@SET C_COMPILER_OPTION=!C_COMPILER_OPTION! %INC_DIR_LIST%
-@IF ERRORLEVEL 1 GOTO error_generic
-@SET CPP_COMPILER_OPTION=!CPP_COMPILER_OPTION! %INC_DIR_LIST%
-@IF ERRORLEVEL 1 GOTO error_generic
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME% /AD /S /B') DO SET INC_DIR_LIST=!INC_DIR_LIST! -I%%f || GOTO error_generic
+@SET C_COMPILER_OPTION=!C_COMPILER_OPTION! %INC_DIR_LIST% || GOTO error_generic
+@SET CPP_COMPILER_OPTION=!CPP_COMPILER_OPTION! %INC_DIR_LIST% || GOTO error_generic
 
 
 @ECHO.
@@ -84,16 +77,11 @@
 @ECHO.
 
 
-@IF NOT EXIST obj MD obj
-@IF ERRORLEVEL 1 GOTO error_generic
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.c /s /b') DO %GCC_EXECUTABLE_DIR% %C_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
-@IF ERRORLEVEL 1 GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cpp /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
-@IF ERRORLEVEL 1 GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cc /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
-@IF ERRORLEVEL 1 GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cxx /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o
-@IF ERRORLEVEL 1 GOTO error_compile
+@IF NOT EXIST obj MD obj || GOTO error_generic
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.c /s /b') DO %GCC_EXECUTABLE_DIR% %C_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cpp /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cc /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cxx /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
 
 
 @ECHO.
@@ -104,9 +92,8 @@
 @ECHO.
 
 
-@FOR /F  "delims="  %%f IN ('DIR obj\*.o /s /b') DO SET OBJ_FILE_LIST=!OBJ_FILE_LIST! %%f
-@%GPP_EXECUTABLE_DIR% -o %BUILD_TARGET_NAME%.elf %OBJ_FILE_LIST% %LINKER_OPTION%
-@IF ERRORLEVEL 1 GOTO error_link
+@FOR /F  "delims="  %%f IN ('DIR obj\*.o /s /b') DO SET OBJ_FILE_LIST=!OBJ_FILE_LIST! %%f || GOTO error_generic
+@%GPP_EXECUTABLE_DIR% -o %BUILD_TARGET_NAME%.elf %OBJ_FILE_LIST% %LINKER_OPTION% || GOTO error_link
 
 
 @ECHO.
@@ -117,8 +104,7 @@
 @ECHO.
 
 
-@%OBJCOPY_EXECUTABLE_DIR% -O ihex %BUILD_TARGET_NAME%.elf %BUILD_TARGET_NAME%.hex
-@IF ERRORLEVEL 1 GOTO error_hex
+@%OBJCOPY_EXECUTABLE_DIR% -O ihex %BUILD_TARGET_NAME%.elf %BUILD_TARGET_NAME%.hex || GOTO error_hex
 
 
 @ECHO.

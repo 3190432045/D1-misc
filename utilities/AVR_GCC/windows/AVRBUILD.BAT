@@ -125,7 +125,7 @@ REM @ECHO OFF
 @REM -----------------------------------------------------------------------
 
 :error_config_file
-@ECHO ERROR: Cannot open BUILD_OPTION.TXT
+@ECHO ERROR: Cannot open AVRBUILD_OPTION.TXT
 @GOTO end
 
 :error_missing_config

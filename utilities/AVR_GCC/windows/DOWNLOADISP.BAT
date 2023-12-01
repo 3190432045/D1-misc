@@ -1,5 +1,5 @@
 @REM
-@REM Download hex file to flash via ISP 20231130
+@REM Download hex file to flash via ISP 20231201
 @REM
 
 @SETLOCAL
@@ -62,6 +62,7 @@
 @ECHO ===============================================================================
 @ECHO.
 
+
 %AVR_EXECUTABLE_DIR%\avrdude -c c232hm -p m644p
 @IF ERRORLEVEL 1 GOTO error_isp
 
@@ -85,6 +86,7 @@
 @ECHO  Done.
 @ECHO ===============================================================================
 @ECHO.
+@GOTO :end
 
 
 :act_aborted

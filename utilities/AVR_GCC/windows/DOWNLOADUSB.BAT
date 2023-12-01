@@ -1,5 +1,5 @@
 @REM
-@REM Download hex file to flash via USB 20231130
+@REM Download hex file to flash via USB 20231201
 @REM
 
 @SETLOCAL
@@ -85,6 +85,7 @@
 @ECHO  Done.
 @ECHO ===============================================================================
 @ECHO.
+@GOTO :end
 
 
 :act_aborted

@@ -1,0 +1,8 @@
+GCC_EXECUTABLE_DIR=D:\CodeBlocks\MinGW64\bin\gcc.exe
+GPP_EXECUTABLE_DIR=D:\CodeBlocks\MinGW64\bin\g++.exe
+PROJECT_FOLDER_NAME=p5
+C_COMPILER_OPTION=
+CPP_COMPILER_OPTION=-Wall -march=i386 -pedantic -Wextra -Wall -std=c++98 -m32 -g
+LINKER_OPTION=-m32  -latomic
+RC_OPTION=
+BUILD_TARGET_NAME=

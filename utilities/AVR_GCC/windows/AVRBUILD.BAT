@@ -16,7 +16,7 @@
 
 @REM -----------------------------------------------------------------------
 
-REM @ECHO OFF
+@ECHO OFF
 
 @ECHO.
 @ECHO                             BUILD FOR WINAVR

@@ -78,10 +78,10 @@
 
 
 @IF NOT EXIST obj MD obj || GOTO error_generic
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.c /s /b') DO %GCC_EXECUTABLE_DIR% %C_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cpp /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cc /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
-@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cxx /s /b') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.c /S /B') DO %GCC_EXECUTABLE_DIR% %C_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cpp /S /B') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cc /S /B') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
+@FOR /F  "delims="  %%f IN ('DIR %PROJECT_FOLDER_NAME%\*.cxx /S /B') DO %GPP_EXECUTABLE_DIR% %CPP_COMPILER_OPTION% -c %%f -o obj\%%~nf.o || GOTO error_compile
 
 
 @ECHO.
@@ -92,7 +92,7 @@
 @ECHO.
 
 
-@FOR /F  "delims="  %%f IN ('DIR obj\*.o /s /b') DO SET OBJ_FILE_LIST=!OBJ_FILE_LIST! %%f || GOTO error_generic
+@FOR /F  "delims="  %%f IN ('DIR obj\*.o /S /B') DO SET OBJ_FILE_LIST=!OBJ_FILE_LIST! %%f || GOTO error_generic
 @%GPP_EXECUTABLE_DIR% -o %BUILD_TARGET_NAME%.elf %OBJ_FILE_LIST% %LINKER_OPTION% || GOTO error_link
 
 
